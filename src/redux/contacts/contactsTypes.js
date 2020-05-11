@@ -1,0 +1,4 @@
+export const Type = {
+    ADDCONTACT: 'ADDCONTACT',
+    DELETECONTACT: 'DELETECONTACT',
+};
