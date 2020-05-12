@@ -8,7 +8,6 @@ const validation = store => next => action => {
             savedContact =>
                 savedContact.name.toLowerCase() === name.toLowerCase(),
         );
-        console.log('sdfgsdf');
         if (!isUniqueName) return next(action);
 
         store.dispatch(alertActions.toShowAlert(`Contact already exist!`));

@@ -47,11 +47,16 @@ export default class App extends Component {
                 <Section title="">
                     <CreateContactForm />
                 </Section>
-                {count > 2 && (
+                <CSSTransition
+                    in={count > 2}
+                    timeout={500}
+                    classNames={popTransition}
+                    unmountOnExit
+                >
                     <Section title="">
                         <Filter />
                     </Section>
-                )}
+                </CSSTransition>
 
                 <Section title="">
                     <ContactsList />
