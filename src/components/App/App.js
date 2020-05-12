@@ -1,88 +1,37 @@
 import React, { Component } from 'react';
-import shortid from 'shortid';
 import { CSSTransition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 
 import styles from './App.module.css';
 import slideTittleTransition from '../../transitions/slide-500ms.module.css';
-import slideTransition from '../../transitions//slide.module.css';
+import popTransition from '../../transitions/pop.module.css';
 
 import Section from '../Section/Section';
-import Notification from '../Notification/Notification';
 import ContactsList from '../ContactsList/ContatctsListContainer';
 import Filter from '../Filter/FilterContainer';
 import CreateContactForm from '../CreateContactForm/CreateContactFormContainer';
 import Alert from '../Alert/Alert';
 
 export default class App extends Component {
+    static propTypes = {
+        alert: PropTypes.string.isRequired,
+        count: PropTypes.number.isRequired,
+    };
+
     state = {
         addTittle: false,
-        alert: {
-            isShow: false,
-            message: '',
-        },
     };
 
     componentDidMount() {
-        // const savedContacts = localStorage.getItem('contacts');
         this.setState({
             addTittle: true,
         });
-        // if (savedContacts) {
-        //     this.setState({ contacts: JSON.parse(savedContacts) });
-        // }
-        // return;
     }
-
-    componentDidUpdate(prevProps, prevState) {
-        // if (prevState.alert.isShow) {
-        //     this.setState({
-        //         alert: { isShow: false, message: '' },
-        //     });
-        // }
-        // if (prevState.contacts !== this.state.contacts) {
-        //     localStorage.setItem(
-        //         'contacts',
-        //         JSON.stringify(this.state.contacts),
-        //     );
-        // }
-    }
-
-    // changeFilter = event => {
-    //     this.setState({ filter: event.target.value });
-    // };
-
-    // addContact = contact => {
-    //     const isUniqueName = this.state.contacts.some(
-    //         savedContact =>
-    //             savedContact.name.toLowerCase() === contact.name.toLowerCase(),
-    //     );
-
-    //     if (isUniqueName) {
-    //         this.setState({
-    //             alert: {
-    //                 isShow: true,
-    //                 message: `Contact ${contact.name} already exist!`,
-    //             },
-    //         });
-    //         return;
-    //     }
-    //     const contactToAdd = {
-    //         ...contact,
-    //         id: shortid.generate(),
-    //     };
-    //     this.setState(state => ({
-    //         contacts: [...state.contacts, contactToAdd],
-    //     }));
-    // };
-
-    // deleteContact = id => {
-    //     this.setState(state => ({
-    //         contacts: state.contacts.filter(contact => contact.id !== id),
-    //     }));
-    // };
 
     render() {
-        const { addTittle, alert } = this.state;
+        const { addTittle } = this.state;
+        const { alert, count } = this.props;
+        const isAlert = alert ? true : false;
 
         return (
             <div className={styles.container}>
@@ -98,22 +47,23 @@ export default class App extends Component {
                 <Section title="">
                     <CreateContactForm />
                 </Section>
-
-                <Section title="">
-                    <Filter />
-                </Section>
+                {count > 2 && (
+                    <Section title="">
+                        <Filter />
+                    </Section>
+                )}
 
                 <Section title="">
                     <ContactsList />
                 </Section>
 
                 <CSSTransition
-                    in={alert.isShow}
+                    in={isAlert}
                     timeout={300}
-                    classNames={slideTransition}
+                    classNames={popTransition}
                     unmountOnExit
                 >
-                    <Alert message={alert.message} />
+                    <Alert message={alert} />
                 </CSSTransition>
             </div>
         );

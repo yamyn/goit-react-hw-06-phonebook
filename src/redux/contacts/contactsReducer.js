@@ -1,11 +1,20 @@
 import { Type } from './contactsTypes';
+import {
+    toGetContacts,
+    toAddContacts,
+    toDeleteContacts,
+} from '../../helpers/saveLocalStorage';
 
 const contactsReducer = (state = [], action) => {
     switch (action.type) {
+        case Type.LOADCONTACTS:
+            return toGetContacts();
+
         case Type.ADDCONTACT:
-            return [...state, action.payload.contact];
+            return toAddContacts(state, action.payload.contact);
+
         case Type.DELETECONTACT:
-            return state.filter(contact => contact.id === action.payload.id);
+            return toDeleteContacts(state, action.payload.id);
         default:
             return state;
     }
