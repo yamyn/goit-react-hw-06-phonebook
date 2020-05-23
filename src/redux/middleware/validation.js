@@ -1,16 +1,19 @@
 import * as alertActions from '../alert/alertActions';
+import Validation, { META } from '../../helpers/Validation';
 
 const validation = store => next => action => {
     if (action.meta && action.meta.addContact) {
         const { contacts } = store.getState();
-        const { name } = action.payload.contact;
-        const isUniqueName = contacts.some(
-            savedContact =>
-                savedContact.name.toLowerCase() === name.toLowerCase(),
-        );
-        if (!isUniqueName) return next(action);
+        const { contact } = action.payload;
+        const validateRes = Validation.validate(contacts, contact);
 
-        store.dispatch(alertActions.toShowAlert(`Contact already exist!`));
+        if (validateRes.meta === META.success) {
+            action.payload.contact = validateRes.contact;
+            next(action);
+        }
+        const alertMessage = validateRes.message ? validateRes.message : '';
+
+        store.dispatch(alertActions.toShowAlert(alertMessage));
 
         setTimeout(() => {
             store.dispatch(alertActions.toHideAlert());
