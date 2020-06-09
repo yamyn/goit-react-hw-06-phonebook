@@ -1,16 +1,9 @@
-import { Type } from './alertTypes';
+import { createReducer } from '@reduxjs/toolkit';
+import { toHideAlert, toShowAlert } from './alertActions';
 
-const contactsReducer = (state = '', action) => {
-    switch (action.type) {
-        case Type.SHOWALERT:
-            return action.payload.message;
+const alertReducer = createReducer('', {
+    [toShowAlert]: (state, action) => action.payload.message,
+    [toHideAlert]: () => '',
+});
 
-        case Type.HIDEALERT:
-            return '';
-
-        default:
-            return state;
-    }
-};
-
-export default contactsReducer;
+export default alertReducer;

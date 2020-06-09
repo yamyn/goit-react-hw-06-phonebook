@@ -1,10 +1,6 @@
-import { Type } from './alertTypes';
+import { createAction } from '@reduxjs/toolkit';
 
-export const toShowAlert = message => ({
-    type: Type.SHOWALERT,
+export const toShowAlert = createAction('SHOWALERT', message => ({
     payload: { message },
-});
-
-export const toHideAlert = () => ({
-    type: Type.HIDEALERT,
-});
+}));
+export const toHideAlert = createAction('HIDEALERT');

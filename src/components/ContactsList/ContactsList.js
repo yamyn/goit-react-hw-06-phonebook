@@ -21,7 +21,8 @@ export default class ContactsList extends Component {
     };
 
     componentDidMount() {
-        this.props.onLoadContacts();
+        const { onLoadContacts } = this.props;
+        onLoadContacts();
     }
 
     render() {

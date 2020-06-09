@@ -1,5 +1,5 @@
-import toAddId from './toAddId';
 import * as Joi from '@hapi/joi';
+import toAddId from './toAddId';
 
 const INVALIDVALUE = {
     name:
@@ -25,8 +25,8 @@ const schema = Joi.object({
 });
 
 class Validation {
-    constructor(schema) {
-        this.schema = schema;
+    constructor(validSchema) {
+        this.schema = validSchema;
     }
 
     validate = (contacts, contact) => {

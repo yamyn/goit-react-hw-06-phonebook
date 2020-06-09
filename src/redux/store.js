@@ -1,20 +1,16 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 
-import contactsReducer from './contacts/contactsReducer';
-import filterReducer from './filter/filterReducer';
+import contactsListReducer from './contacts/contactsReducer';
 import alertReducer from './alert/alertReducer';
 
 import validation from './middleware/validation';
 
-const rootReducer = combineReducers({
-    contacts: contactsReducer,
-    filter: filterReducer,
-    alert: alertReducer,
+const store = configureStore({
+    reducer: {
+        contactsList: contactsListReducer,
+        alert: alertReducer,
+    },
+    middleware: [...getDefaultMiddleware(), validation],
 });
-
-const enhancer = composeWithDevTools(applyMiddleware(validation));
-
-const store = createStore(rootReducer, enhancer);
 
 export default store;

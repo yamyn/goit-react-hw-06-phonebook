@@ -31,7 +31,7 @@ export default class App extends Component {
     render() {
         const { addTittle } = this.state;
         const { alert, count } = this.props;
-        const isAlert = alert ? true : false;
+        const isAlert = !!alert;
 
         return (
             <div className={styles.container}>
@@ -48,7 +48,7 @@ export default class App extends Component {
                     <CreateContactForm />
                 </Section>
                 <CSSTransition
-                    in={count > 2}
+                    in={count >= 2}
                     timeout={500}
                     classNames={popTransition}
                     unmountOnExit

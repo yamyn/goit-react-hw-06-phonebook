@@ -16,7 +16,6 @@ export const toAddContacts = (contacts, contact) => {
         localStorage.setItem('contacts', JSON.stringify(newContacts));
         return newContacts;
     } catch (error) {
-        alert('Woooops, something wrong');
         return contacts;
     }
 };
@@ -27,7 +26,6 @@ export const toDeleteContacts = (contacts, id) => {
         localStorage.setItem('contacts', JSON.stringify(newContacts));
         return newContacts;
     } catch (error) {
-        alert('Woooops, something wrong');
         return contacts;
     }
 };
